@@ -3,6 +3,43 @@ var YQL = require('yql');
 var request = require('request');
 
 
+var bathWOEID = 12056;
+
+
+
+
+function getDataFromYahoo(){
+
+  var query = new YQL('select item.forecast from weather.forecast where woeid=12056 AND u=\'c\'');
+
+  query.exec(function (error, response) {
+
+
+    if(error){
+      console.log("error!");
+    } else {
+
+
+      var items = response.query.results.channel;
+      //  console.log(JSON.stringify(items) );
+
+      for(var index in items){
+
+        var item = items[index];
+
+
+        console.log(JSON.stringify(item.item.forecast));
+        console.log(item.item.forecast.code);
+        
+      }
+
+
+    }
+
+  });
+
+
+}
 
 function sendRequestToCloudBit(percent){
   //my cloudbit
@@ -38,4 +75,7 @@ function sendRequestToCloudBit(percent){
 }
 
 
-sendRequestToCloudBit(30);
+//sendRequestToCloudBit(30);
+
+
+getDataFromYahoo();
